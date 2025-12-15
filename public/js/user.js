@@ -13,7 +13,8 @@ function obtenerRegistros() {
                         <td>${element.telefono}</td>
                         <td>${element.rol}</td>
                         <td>${element.estado}</td>
-                        <td><button class="btn btn-success">Editar</button> 
+                            <td>
+                            <a class="btn btn-success" href="form.html?id=${element.id}">Editar</a>
                             <button class="btn btn-danger" onClick="eliminarUsuario(${element.id})">Eliminar</button>
                             </td>
                     </tr>`;
