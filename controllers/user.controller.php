@@ -40,6 +40,23 @@ class UsuarioControlador {
         echo json_encode(array("respuesta" => "ok", "datos" => $this->user->obtenerRegistros()));
     }
 
+    function obtenerPorCorreo($correo) {
+        try {
+            header("Content-Type: application/json");
+            $datos = $this->user->obtenerPorCorreo($correo);
+            if ($datos) {
+                 echo json_encode(array("respuesta" => "ok", "datos" => $datos));
+            } else {
+                 echo json_encode(array("respuesta" => "error", "mensaje" => "Usuario no encontrado o inactivo."));
+            }
+        } catch (Exception $e) {
+            header("Content-Type: application/json");
+            echo json_encode(array("respuesta" => "error", "mensaje" => $e->getMessage()));
+            error_log("Error en UsuarioControlador::obtenerPorCorreo: " . $e->getMessage());
+        }
+    }
+
+
     function obtenerUn($id) {
         header("Content-Type: application/json");
         echo json_encode(array("respuesta" => "ok", "datos" => $this->user->obtenerUnRegistro($id)));
