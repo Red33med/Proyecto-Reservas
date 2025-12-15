@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Administrativo - StayFinder</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #137fec;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .sidebar {
+            min-height: 100vh;
+            background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+            color: white;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 260px;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .sidebar .nav-link {
+            color: rgba(255, 255, 255, 0.7);
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 4px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sidebar .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .sidebar .nav-link.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .main-content {
+            margin-left: 260px;
+            padding: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            border: 1px solid #e5e7eb;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .table-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .badge-status {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary) 0%, #0d6efd 100%);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                position: relative;
+                min-height: auto;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="mb-4">
+            <h4 class="fw-bold">StayFinder Admin</h4>
+            <p class="small text-white-50 mb-0">Panel de Control</p>
+        </div>
+
+        <nav class="nav flex-column">
+            <a class="nav-link active" href="#" data-section="dashboard">
+                <span class="material-icons">dashboard</span>
+                Dashboard
+            </a>
+            <a class="nav-link" href="#" data-section="espacios">
+                <span class="material-icons">apartment</span>
+                Gestión de Espacios
+            </a>
+            <a class="nav-link" href="#" data-section="reservas">
+                <span class="material-icons">event_note</span>
+                Historial de Reservas
+            </a>
+            <a class="nav-link" href="#" data-section="estadisticas">
+                <span class="material-icons">bar_chart</span>
+                Estadísticas
+            </a>
+            <a class="nav-link" href="#" data-section="configuracion">
+                <span class="material-icons">settings</span>
+                Cerrar Sesión
+            </a>
+        </nav>
+
+        <hr class="my-4 border-secondary">
+
+        <div class="d-flex align-items-center gap-2">
+            <img src="https://ui-avatars.com/api/?name=Admin&background=137fec&color=fff" class="rounded-circle"
+                width="40" height="40" alt="Admin">
+            <div class="flex-grow-1">
+                <p class="mb-0 small fw-bold">Administrador</p>
+                <p class="mb-0 text-white-50" style="font-size: 11px;">admin@stayfinder.com</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Dashboard Section -->
+        <div id="dashboard-section" class="content-section">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h2 class="fw-bold mb-1">Dashboard</h2>
+                    <p class="text-muted mb-0">Resumen general del sistema</p>
+                </div>
+                <button class="btn btn-primary">
+                    <span class="material-icons" style="font-size: 18px; vertical-align: middle;">add</span>
+                    Nuevo Espacio
+                </button>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="row g-3 mb-4">
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <p class="text-muted mb-1 small">Total Espacios</p>
+                                <h3 class="fw-bold mb-0">24</h3>
+                                <small class="text-success">+3 este mes</small>
+                            </div>
+                            <div class="stat-icon" style="background: rgba(19,127,236,0.1); color: var(--primary);">
+                                <span class="material-icons">apartment</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <p class="text-muted mb-1 small">Reservas Activas</p>
+                                <h3 class="fw-bold mb-0">156</h3>
+                                <small class="text-success">+12% vs. mes anterior</small>
+                            </div>
+                            <div class="stat-icon" style="background: rgba(16,185,129,0.1); color: var(--success);">
+                                <span class="material-icons">event_available</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <p class="text-muted mb-1 small">Ingresos del Mes</p>
+                                <h3 class="fw-bold mb-0">€18,420</h3>
+                                <small class="text-warning">+8% vs. mes anterior</small>
+                            </div>
+                            <div class="stat-icon" style="background: rgba(245,158,11,0.1); color: var(--warning);">
+                                <span class="material-icons">payments</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <p class="text-muted mb-1 small">Tasa de Ocupación</p>
+                                <h3 class="fw-bold mb-0">87%</h3>
+                                <small class="text-success">+5% vs. mes anterior</small>
+                            </div>
+                            <div class="stat-icon" style="background: rgba(139,92,246,0.1); color: #8b5cf6;">
+                                <span class="material-icons">trending_up</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="table-card">
+                <h5 class="fw-bold mb-3">Actividad Reciente</h5>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Acción</th>
+                                <th>Espacio</th>
+                                <th>Usuario</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recentActivity">
+                            <tr>
+                                <td>14/12/2025 10:30</td>
+                                <td>Nueva Reserva</td>
+                                <td>Loft Luminoso Plaza Mayor</td>
+                                <td>Juan Pérez</td>
+                                <td><span class="badge-status bg-success text-white">Confirmada</span></td>
+                            </tr>
+                            <tr>
+                                <td>14/12/2025 09:15</td>
+                                <td>Cancelación</td>
+                                <td>Suite Boutique Retiro</td>
+                                <td>María García</td>
+                                <td><span class="badge-status bg-danger text-white">Cancelada</span></td>
+                            </tr>
+                            <tr>
+                                <td>13/12/2025 18:45</td>
+                                <td>Nuevo Espacio</td>
+                                <td>Casa Moderna Salamanca</td>
+                                <td>Admin</td>
+                                <td><span class="badge-status bg-primary text-white">Publicado</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gestión de Espacios Section -->
+        <div id="espacios-section" class="content-section" style="display: none;">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h2 class="fw-bold mb-1">Gestión de Espacios</h2>
+                    <p class="text-muted mb-0">Administra todos los alojamientos</p>
+                </div>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEspacio">
+                    <span class="material-icons" style="font-size: 18px; vertical-align: middle;">add</span>
+                    Agregar Espacio
+                </button>
+            </div>
+
+            <!-- Filters -->
+            <div class="table-card mb-3">
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" placeholder="Buscar espacio..." id="searchEspacio">
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-select" id="filterTipo">
+                            <option value="">Todos los tipos</option>
+                            <option value="apartamento">Apartamento</option>
+                            <option value="casa">Casa</option>
+                            <option value="habitacion">Habitación</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-select" id="filterEstado">
+                            <option value="">Todos los estados</option>
+                            <option value="disponible">Disponible</option>
+                            <option value="ocupado">Ocupado</option>
+                            <option value="mantenimiento">Mantenimiento</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Espacios Table -->
+            <div class="table-card">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Tipo</th>
+                                <th>Ubicación</th>
+                                <th>Precio/Noche</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="espaciosTable">
+                            <!-- Se llenará dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Historial de Reservas Section -->
+        <div id="reservas-section" class="content-section" style="display: none;">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h2 class="fw-bold mb-1">Historial de Reservas</h2>
+                    <p class="text-muted mb-0">Registro completo de reservas y cancelaciones</p>
+                </div>
+                <button class="btn btn-outline-primary">
+                    <span class="material-icons" style="font-size: 18px; vertical-align: middle;">download</span>
+                    Exportar Excel
+                </button>
+            </div>
+
+            <!-- Filters -->
+            <div class="table-card mb-3">
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <input type="date" class="form-control" id="fechaInicio">
+                    </div>
+                    <div class="col-md-3">
+                        <input type="date" class="form-control" id="fechaFin">
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-select" id="filterEstadoReserva">
+                            <option value="">Todos los estados</option>
+                            <option value="confirmada">Confirmada</option>
+                            <option value="cancelada">Cancelada</option>
+                            <option value="completada">Completada</option>
+                            <option value="pendiente">Pendiente</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-primary w-100">Filtrar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reservas Table -->
+            <div class="table-card">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Cliente</th>
+                                <th>Espacio</th>
+                                <th>Check-in</th>
+                                <th>Check-out</th>
+                                <th>Total</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reservasTable">
+                            <!-- Se llenará dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Estadísticas Section -->
+        <div id="estadisticas-section" class="content-section" style="display: none;">
+            <h2 class="fw-bold mb-4">Estadísticas de Uso</h2>
+
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="table-card">
+                        <h5 class="fw-bold mb-3">Ingresos Mensuales</h5>
+                        <canvas id="chartIngresos" height="250"></canvas>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="table-card">
+                        <h5 class="fw-bold mb-3">Reservas por Tipo de Espacio</h5>
+                        <canvas id="chartTipos" height="250"></canvas>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="table-card">
+                        <h5 class="fw-bold mb-3">Ocupación por Mes</h5>
+                        <canvas id="chartOcupacion" height="150"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Agregar/Editar Espacio -->
+    <div class="modal fade" id="modalEspacio" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <span class="material-icons" style="vertical-align: middle;">apartment</span>
+                        Agregar Nuevo Espacio
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formEspacio">
+                        <input type="hidden" id="espacioId">
+                        <div class="row g-3">
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">Nombre del Espacio</label>
+                                <input type="text" class="form-control" id="espacioNombre" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Tipo</label>
+                                <select class="form-select" id="espacioTipo" required>
+                                    <option value="">Seleccionar...</option>
+                                    <option value="apartamento">Apartamento</option>
+                                    <option value="casa">Casa Entera</option>
+                                    <option value="habitacion">Habitación Privada</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Precio por Noche (€)</label>
+                                <input type="number" class="form-control" id="espacioPrecio" required>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">Ubicación</label>
+                                <input type="text" class="form-control" id="espacioUbicacion" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Capacidad</label>
+                                <input type="number" class="form-control" id="espacioCapacidad" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Habitaciones</label>
+                                <input type="number" class="form-control" id="espacioHabitaciones" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Baños</label>
+                                <input type="number" class="form-control" id="espacioBanos" required>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">Servicios</label>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="servWifi" value="wifi">
+                                            <label class="form-check-label" for="servWifi">WiFi</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="servAC" value="ac">
+                                            <label class="form-check-label" for="servAC">Aire Acondicionado</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="servCocina"
+                                                value="cocina">
+                                            <label class="form-check-label" for="servCocina">Cocina</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="servParking"
+                                                value="parking">
+                                            <label class="form-check-label" for="servParking">Parking</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">Descripción</label>
+                                <textarea class="form-control" id="espacioDescripcion" rows="3"></textarea>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">Políticas de Reserva</label>
+                                <textarea class="form-control" id="espacioPoliticas" rows="2"
+                                    placeholder="Ej: Check-in: 14:00, Check-out: 11:00, Cancelación gratuita 24h antes..."></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="btnGuardarEspacio">Guardar Espacio</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

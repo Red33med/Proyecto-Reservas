@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Búsqueda y Disponibilidad de Alojamientos</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="public/css/index.css">
+
+
+</head>
+
+<body>
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+                <div class="logo-icon">
+                    <span class="material-icons">travel_explore</span>
+                </div>
+                <span class="fw-bold">StayFinder</span>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav align-items-center gap-3">
+                    <li class="nav-item">
+                        <a class="nav-link fw-medium" href="#">Mis Reservas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-medium" href="#">Favoritos</a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-link position-relative p-2">
+                            <span class="material-icons">notifications</span>
+                            <span
+                                class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"></span>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button
+                            class="btn btn-outline-secondary rounded-pill d-flex align-items-center gap-2 px-2 py-1">
+                            <span class="material-icons">menu</span>
+                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDN7WIYrnfx80PpE8jg_mt1BG7xSRxYL-FFxxRci2OHXNBm2P7zmEZoy2ffaykIXgBMBqsSnDnPk5kWy49YWXsAJDSazjUgRziDFU4brwIbPTIsdxdaWqU8oaEjsS6IqdFHqpy21eeubG30h1BM8BFZjLxVxtYOM5dVXt-2gcKdGQliyZ-WIPKAYovp6KpGGI9fL0ZTm4IR2JiYiHB20CP81sxbpJSzYuUI_TyMlQEg4SiOkP1u2Cu4TukfEGcQroQkYpfW6O3thhAH"
+                                class="rounded-circle" width="32" height="32" alt="User">
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container my-5">
+        <!-- Search Section -->
+        <section class="mb-5">
+            <h1 class="display-5 fw-bold mb-4">Encuentra tu próximo alojamiento</h1>
+
+            <!-- Search Bar -->
+            <div class="search-card p-2">
+                <div class="row g-2 align-items-end">
+                    <div class="col-12 col-md-3">
+                        <div class="search-input-wrapper">
+                            <label>Destino</label>
+                            <input type="text" class="form-control" placeholder="¿A dónde quieres ir?"
+                                value="Madrid, España">
+                            <span
+                                class="material-icons position-absolute end-0 top-50 translate-middle-y me-3 text-muted">location_on</span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-3">
+                        <div class="search-input-wrapper">
+                            <label>Llegada - Salida</label>
+                            <input type="text" class="form-control" readonly value="15 Oct - 22 Oct">
+                            <span
+                                class="material-icons position-absolute end-0 top-50 translate-middle-y me-3 text-muted">calendar_month</span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-3">
+                        <div class="search-input-wrapper">
+                            <label>Huéspedes</label>
+                            <select class="form-select">
+                                <option>2 huéspedes</option>
+                                <option>1 huésped</option>
+                                <option>3 huéspedes</option>
+                                <option>4+ huéspedes</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-3">
+                        <button
+                            class="btn btn-primary w-100 rounded-3 py-3 d-flex align-items-center justify-content-center gap-2">
+                            <span class="material-icons">search</span>
+                            <span class="fw-bold">Buscar</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="d-flex flex-wrap gap-2 mt-3">
+                <button class="filter-btn">
+                    <span class="material-icons" style="font-size: 18px; vertical-align: middle;">tune</span>
+                    Filtros
+                </button>
+                <div class="vr"></div>
+                <button class="filter-btn">Precio</button>
+                <button class="filter-btn">Tipo de alojamiento</button>
+                <button class="filter-btn">Servicios</button>
+                <button class="filter-btn">Más valorados</button>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <div class="row">
+            <!-- Left Column: Results List -->
+            <div class="col-lg-7">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <p class="text-muted mb-0 fw-medium">Más de 24 alojamientos encontrados</p>
+                    <div class="d-flex align-items-center gap-1">
+                        <span class="small fw-medium">Ordenar por: Recomendados</span>
+                        <span class="material-icons">expand_more</span>
+                    </div>
+                </div>
+
+                <!-- Card 1 -->
+                <article class="accommodation-card mb-3">
+                    <div class="row g-0">
+                        <div class="col-sm-4 position-relative overflow-hidden">
+                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSGaJ4wuPSmSswBpw1MTbZ9L28E3lzi5OI8l7mft4QnxsXzuxY7IPL2PAnCuGR7BWRsMROemXEmcBB_uIFqvVZfRutOBxcN502a52UMWTmXSW2qMdC4SOEakRDfsKeEjug7ntH8-ktsQfY1gs66sgdyMxsmWaQb7k-PtNF4VnDPh5CHfMgJaqTiPTGjVE9TNKGcNT7B1wRnTtjdcXlEcefWZ2H5bpf1rBJYzz43tjdRO0YQ00TnSYfKTWZGdyCet0w2LM840lNj1BM"
+                                class="card-image" alt="Loft">
+                            <button class="favorite-btn">
+                                <span class="material-icons text-muted">favorite_border</span>
+                            </button>
+                            <span class="badge-superhost">Superanfitrión</span>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="card-body d-flex flex-column justify-content-between h-100">
+                                <div>
+                                    <div class="d-flex justify-content-between align-items-start mb-1">
+                                        <small class="text-muted fw-semibold">Apartamento entero · Centro</small>
+                                        <div class="d-flex align-items-center gap-1">
+                                            <span class="material-icons text-warning"
+                                                style="font-size: 18px;">star</span>
+                                            <span class="fw-bold small">4.92 (128)</span>
+                                        </div>
+                                    </div>
+                                    <h5 class="card-title fw-bold mb-2">Loft Luminoso en Plaza Mayor</h5>
+                                    <div class="d-flex gap-2 mb-3">
+                                        <span class="amenity-badge">Wifi</span>
+                                        <span class="amenity-badge">Cocina</span>
+                                        <span class="amenity-badge">AC</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-end pt-3 border-top">
+                                    <div>
+                                        <small class="text-decoration-line-through text-muted">120€</small>
+                                        <p class="mb-0 fs-5 fw-bold">95€ <span class="small fw-normal text-muted">/
+                                                noche</span></p>
+                                    </div>
+                                    <a href="#" class="text-primary fw-bold text-decoration-none small">Ver detalles</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 2 -->
+                <article class="accommodation-card mb-3">
+                    <div class="row g-0">
+                        <div class="col-sm-4 position-relative overflow-hidden">
+                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKn8RQMG4hRfWM90Zp3nLpQGZnjOE9zoOC94xb1RxooOLCvS9UsQ15OeeDtiLch7OQpJVyrPGL-2mZ4skrC1Btar79hWcVOArIb9TozjWkBL2QdFwFHlHw6U66bMthoRys7rtJsUTJwXovy7h35ONTks9rC4wsrsw4n0b9UFoxakCPhVFdGOk-neSvMTJyANSlzhY-gwPYl-5697hD5NQ4i4e0ayWbEPd_V4axjch5ZNXqu7ZX_7CccwBjKXPSrzrIjUIu0GPsD8wa"
+                                class="card-image" alt="Suite">
+                            <button class="favorite-btn">
+                                <span class="material-icons text-muted">favorite_border</span>
+                            </button>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="card-body d-flex flex-column justify-content-between h-100">
+                                <div>
+                                    <div class="d-flex justify-content-between align-items-start mb-1">
+                                        <small class="text-muted fw-semibold">Habitación privada · Retiro</small>
+                                        <div class="d-flex align-items-center gap-1">
+                                            <span class="material-icons text-warning"
+                                                style="font-size: 18px;">star</span>
+                                            <span class="fw-bold small">4.85 (56)</span>
+                                        </div>
+                                    </div>
+                                    <h5 class="card-title fw-bold mb-2">Suite Boutique con Vistas</h5>
+                                    <div class="d-flex gap-2 mb-3">
+                                        <span class="amenity-badge">Desayuno</span>
+                                        <span class="amenity-badge">Gym</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-end pt-3 border-top">
+                                    <div>
+                                        <p class="mb-0 fs-5 fw-bold">140€ <span class="small fw-normal text-muted">/
+                                                noche</span></p>
+                                    </div>
+                                    <a href="#" class="text-primary fw-bold text-decoration-none small">Ver detalles</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 3 -->
+                <article class="accommodation-card mb-3">
+                    <div class="row g-0">
+                        <div class="col-sm-4 position-relative overflow-hidden">
+                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcN5K-4-osNqGvep0PxQV1G_9tRlfMasmtp0igaqlTlhTgdwmpsu5OH_gWzv_9Yc5HSnRF2PD3_OBV66B-CJq7ZJPBXWOAtKfvjAb0Yg5artaWaa-Hhs8gAHq4OoH8Jm-761dF0uG_s-FguwmPtGXycq76ageNiSNahJDNAV514MZTi4Kq3DWm8wPs91EvHWVPosQeGiwfv9SrJeUo_RUNrwwATUs-DKUI08LAcYF2KmT30ddHZQp8HvC-9HkSROG2eLWg4zhW_liy"
+                                class="card-image" alt="Casa">
+                            <button class="favorite-btn">
+                                <span class="material-icons text-muted">favorite_border</span>
+                            </button>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="card-body d-flex flex-column justify-content-between h-100">
+                                <div>
+                                    <div class="d-flex justify-content-between align-items-start mb-1">
+                                        <small class="text-muted fw-semibold">Casa entera · Salamanca</small>
+                                        <div class="d-flex align-items-center gap-1">
+                                            <span class="material-icons text-muted" style="font-size: 18px;">star</span>
+                                            <span class="fw-bold small">Nuevo</span>
+                                        </div>
+                                    </div>
+                                    <h5 class="card-title fw-bold mb-2">Casa Moderna con Jardín Privado</h5>
+                                    <div class="d-flex gap-2 mb-3">
+                                        <span class="amenity-badge">Piscina</span>
+                                        <span class="amenity-badge">Parking</span>
+                                        <span class="amenity-badge">Mascotas OK</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-end pt-3 border-top">
+                                    <div>
+                                        <p class="mb-0 fs-5 fw-bold">210€ <span class="small fw-normal text-muted">/
+                                                noche</span></p>
+                                    </div>
+                                    <a href="#" class="text-primary fw-bold text-decoration-none small">Ver detalles</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Right Column: Calendar -->
+            <div class="col-lg-5 d-none d-lg-block">
+                <div class="calendar-card p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="fw-bold mb-0 d-flex align-items-center gap-2">
+                            <span class="material-icons text-primary">event_available</span>
+                            Disponibilidad
+                        </h5>
+                        <span class="badge bg-success">Tiempo real</span>
+                    </div>
+                    <p class="small text-muted mb-4">Selecciona tus fechas para ver precios exactos.</p>
+
+                    <!-- Calendar Header -->
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <button class="btn btn-sm btn-link text-dark">
+                            <span class="material-icons">chevron_left</span>
+                        </button>
+                        <span class="fw-bold">Octubre 2023</span>
+                        <button class="btn btn-sm btn-link text-dark">
+                            <span class="material-icons">chevron_right</span>
+                        </button>
+                    </div>
+
+                    <!-- Weekday Labels -->
+                    <div class="d-grid mb-2" style="grid-template-columns: repeat(7, 1fr);">
+                        <div class="text-center small fw-semibold text-muted">D</div>
+                        <div class="text-center small fw-semibold text-muted">L</div>
+                        <div class="text-center small fw-semibold text-muted">M</div>
+                        <div class="text-center small fw-semibold text-muted">X</div>
+                        <div class="text-center small fw-semibold text-muted">J</div>
+                        <div class="text-center small fw-semibold text-muted">V</div>
+                        <div class="text-center small fw-semibold text-muted">S</div>
+                    </div>
+
+                    <!-- Calendar Days -->
+                    <div class="d-grid" style="grid-template-columns: repeat(7, 1fr); gap: 2px;">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <button class="calendar-day unavailable">1</button>
+                        <button class="calendar-day unavailable">2</button>
+                        <button class="calendar-day unavailable">3</button>
+                        <button class="calendar-day unavailable">4</button>
+                        <button class="calendar-day">5</button>
+                        <button class="calendar-day">6</button>
+                        <button class="calendar-day">7</button>
+                        <button class="calendar-day">8</button>
+                        <button class="calendar-day">9</button>
+                        <button class="calendar-day">10</button>
+                        <button class="calendar-day">11</button>
+                        <button class="calendar-day">12</button>
+                        <button class="calendar-day">13</button>
+                        <button class="calendar-day">14</button>
+                        <button class="calendar-day selected-start">15</button>
+                        <button class="calendar-day in-range">16</button>
+                        <button class="calendar-day in-range">17</button>
+                        <button class="calendar-day in-range">18</button>
+                        <button class="calendar-day in-range">19</button>
+                        <button class="calendar-day in-range">20</button>
+                        <button class="calendar-day in-range">21</button>
+                        <button class="calendar-day selected-end">22</button>
+                        <button class="calendar-day">23</button>
+                        <button class="calendar-day">24</button>
+                        <button class="calendar-day">25</button>
+                        <button class="calendar-day">26</button>
+                        <button class="calendar-day">27</button>
+                        <button class="calendar-day">28</button>
+                        <button class="calendar-day">29</button>
+                        <button class="calendar-day">30</button>
+                        <button class="calendar-day">31</button>
+                    </div>
+
+                    <!-- Legend -->
+                    <div class="d-flex gap-3 mt-3 pt-3 border-top small text-muted">
+                        <div class="d-flex align-items-center gap-2">
+                            <div style="width: 8px; height: 8px; border-radius: 50%; background: #cbd5e1;"></div>
+                            <span>No disponible</span>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--primary);"></div>
+                            <span>Seleccionado</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="public/js/index.js"></script>
+</body>
+
+</html>
