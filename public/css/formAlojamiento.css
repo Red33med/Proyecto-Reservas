@@ -1,0 +1,32 @@
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #f8f9fa;
+  /* Color de fondo similar al login y alojamientos */
+}
+
+.form-signin {
+  width: 100%;
+  max-width: 600px;
+  /* Ancho máximo para el formulario */
+  padding: 30px;
+  margin: auto;
+  background-color: #fff;
+  /* Fondo blanco para el formulario */
+  border-radius: 0.5rem;
+  /* Bordes redondeados */
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  /* Sombra ligera */
+}
+
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+
+.form-signin input[type="url"] {
+  margin-bottom: 10px;
+  /* Espacio debajo del campo de URL */
+}

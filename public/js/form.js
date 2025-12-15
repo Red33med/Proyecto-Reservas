@@ -70,7 +70,7 @@ document.getElementById("btn-guardar").addEventListener("click", function () {
   // 2. Validación extra: Si es usuario NUEVO (POST), la contraseña es obligatoria.
   if (metodo === "POST" && !datos.password) {
     alert("La contraseña es obligatoria para nuevos usuarios");
-    return; // Detenemos aquí
+    return;
   }
 
   // Enviamos la petición al servidor

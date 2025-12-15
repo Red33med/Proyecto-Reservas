@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Reservas</title>
+    <link rel="stylesheet" href="../public/css/reservas.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <h1>Sistema de Reservas</h1>
+            <div class="nav-menu">
+                <span id="usuario-nombre"></span>
+                <button onclick="cerrarSesion()" class="btn btn-secondary">Cerrar Sesión</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Sección de espacios disponibles -->
+        <section id="espacios-section" class="section">
+            <h2>Espacios Disponibles</h2>
+            <div id="espacios-lista" class="espacios-grid"></div>
+        </section>
+
+        <!-- Modal de reserva -->
+        <div id="modal-reserva" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="cerrarModal()">&times;</span>
+                <h2 id="modal-titulo">Reservar Espacio</h2>
+
+                <div class="espacio-detalle" id="espacio-detalle">
+                    <!-- Detalles del espacio seleccionado -->
+                </div>
+
+                <div class="reserva-form">
+                    <h3>Seleccione las fechas</h3>
+
+                    <div class="form-group">
+                        <label for="fecha-inicio">Fecha de inicio:</label>
+                        <input type="date" id="fecha-inicio" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fecha-fin">Fecha de fin:</label>
+                        <input type="date" id="fecha-fin" class="form-control" required>
+                    </div>
+
+                    <div id="calendario-container">
+                        <div class="calendario-header">
+                            <button onclick="mesAnterior()" class="btn-nav">◀</button>
+                            <h3 id="mes-anio"></h3>
+                            <button onclick="mesSiguiente()" class="btn-nav">▶</button>
+                        </div>
+                        <div id="calendario" class="calendario"></div>
+                        <div class="leyenda">
+                            <span class="leyenda-item"><span class="color-disponible"></span> Disponible</span>
+                            <span class="leyenda-item"><span class="color-reservado"></span> Reservado</span>
+                            <span class="leyenda-item"><span class="color-seleccionado"></span> Seleccionado</span>
+                        </div>
+                    </div>
+
+                    <div id="resumen-reserva" class="resumen-reserva" style="display: none;">
+                        <h3>Resumen de Reserva</h3>
+                        <p><strong>Días:</strong> <span id="resumen-dias">0</span></p>
+                        <p><strong>Precio por noche:</strong> $<span id="resumen-precio-noche">0</span></p>
+                        <p><strong>Total:</strong> $<span id="resumen-total">0</span></p>
+                    </div>
+
+                    <div class="form-actions">
+                        <button onclick="verificarDisponibilidad()" class="btn btn-primary">Verificar
+                            Disponibilidad</button>
+                        <button id="btn-confirmar-reserva" onclick="confirmarReserva()" class="btn btn-success"
+                            style="display: none;">Confirmar Reserva</button>
+                        <button onclick="cerrarModal()" class="btn btn-secondary">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de mis reservas -->
+        <section id="mis-reservas-section" class="section">
+            <h2>Mis Reservas</h2>
+            <div id="mis-reservas-lista" class="reservas-lista"></div>
+        </section>
+    </div>
+
+    <script src="../public/js/reserva.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+body {
+  padding-top: 56px;
+  /* Ajuste para navbar fija */
+  background-color: #f8f9fa;
+  /* Color de fondo similar al login */
+}
+
+.img-thumbnail {
+  max-width: 100px;
+  height: auto;
+  object-fit: cover;
+  /* Ajusta la imagen dentro del contenedor */
+}
+
+.table-container {
+  background-color: #fff;
+  /* Fondo blanco para la tabla */
+  border-radius: 0.375rem;
+  /* Bordes redondeados */
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  /* Sombra */
+  padding: 1rem;
+  /* Espaciado interno */
+}
+
+.btn-custom {
+  margin-right: 0.25rem;
+  /* Espaciado entre botones */
+}
