@@ -1,24 +1,24 @@
 // Verificar sesión al cargar
-window.addEventListener("DOMContentLoaded", function () {
-  verificarSesion();
-  cargarEspacios();
-  cargarMisReservas();
-});
+// window.addEventListener("DOMContentLoaded", function () {
+//   verificarSesion();
+//   cargarEspacios();
+//   cargarMisReservas();
+// });
 
-function cerrarSesion() {
-  sessionStorage.clear();
-  localStorage.clear();
-  window.location.href = "login.html";
-}
+// function cerrarSesion() {
+//   sessionStorage.clear();
+//   localStorage.clear();
+//   window.location.href = "login.html";
+// }
 
-function verificarSesion() {
-  const user = JSON.parse(sessionStorage.getItem("user") || "{}");
-  if (!user.id) {
-    window.location.href = "login.html";
-    return;
-  }
-  document.getElementById("usuario-nombre").textContent = user.nombre;
-}
+// function verificarSesion() {
+//   const user = JSON.parse(sessionStorage.getItem("user") || "{}");
+//   if (!user.id) {
+//     window.location.href = "login.html";
+//     return;
+//   }
+//   document.getElementById("usuario-nombre").textContent = user.nombre;
+// }
 
 // Funcionalidad de favoritos
 document.querySelectorAll(".favorite-btn").forEach((btn) => {

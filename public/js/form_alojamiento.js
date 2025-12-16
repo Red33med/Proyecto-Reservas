@@ -2,59 +2,115 @@ document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("form-alojamiento");
   const btnGuardar = document.getElementById("btn-guardar");
 
-  // Verificar si hay un ID en la URL (para edición)
   const urlParams = new URLSearchParams(window.location.search);
   const idParam = urlParams.get("id");
 
   if (idParam) {
-    // Si hay un ID, estamos en modo edición
     cargarDatosAlojamiento(idParam);
   }
 
   btnGuardar.addEventListener("click", function () {
     const formData = new FormData(form);
-
-    // Determinar si es INSERT o UPDATE
     const id = formData.get("id");
     const method = id ? "PUT" : "POST";
 
-    // Enviar los datos al controlador
-    fetch("../controllers/alojamiento.controller.php", {
-      method: method,
-      body: formData,
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
+    if (method === "PUT") {
+      // Enviar como JSON
+      const datosParaActualizar = {
+        id: formData.get("id"),
+        nombre: formData.get("nombre"),
+        descripcion: formData.get("descripcion"),
+        ubicacion: formData.get("ubicacion"),
+        precio_noche: formData.get("precio_noche"),
+        capacidad: formData.get("capacidad"),
+        imagen: formData.get("imagen"),
+        // No enviar 'estado' a menos que se desee editar
+      };
+
+      console.log(
+        "Valor de 'imagen' enviado en PUT:",
+        datosParaActualizar.imagen
+      );
+
+      fetch("../controllers/alojamiento.controller.php", {
+        method: method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(datosParaActualizar),
       })
-      .then((data) => {
-        console.log(data); // Para depuración
-        if (data.respuesta === "ok") {
-          alert("Alojamiento guardado exitosamente.");
-          // Redirigir a la lista de alojamientos
-          window.location.href = "alojamientos.html";
-        } else {
-          alert(
-            "Hubo un problema al guardar el alojamiento. Intente nuevamente."
-          );
-        }
+        .then((response) => {
+          if (!response.ok) {
+            return response.text().then((text) => {
+              try {
+                // Intenta parsear como JSON de error
+                const jsonData = JSON.parse(text);
+                return { ok: false, status: response.status, json: jsonData };
+              } catch (e) {
+                // Si no es JSON, devuelve texto
+                console.error("Respuesta no JSON del servidor:", text);
+                return { ok: false, status: response.status, text: text };
+              }
+            });
+          }
+          return response.json().then((json) => ({ ok: true, json }));
+        })
+        .then((result) => {
+          if (result.ok) {
+            if (result.json.respuesta === "ok") {
+              alert("Alojamiento actualizado exitosamente.");
+              window.location.href = "alojamientos.html";
+            } else {
+              alert(
+                "Error: " + (result.json.mensaje || "Mensaje no disponible")
+              );
+            }
+          } else {
+            if (result.json) {
+              alert(
+                "Error del servidor (JSON): " +
+                  (result.json.mensaje || "Error desconocido")
+              );
+            } else if (result.text) {
+              console.error("Error del servidor (HTML/Texto):", result.text);
+              alert(
+                "Error del servidor (no es un JSON válido). Revisa la consola."
+              );
+            }
+          }
+        })
+        .catch((error) => {
+          console.error("Error en PUT:", error);
+          alert("Error de red o del servidor. Detalles: " + error.message);
+        });
+    } else {
+      // Enviar como FormData para POST
+      fetch("../controllers/alojamiento.controller.php", {
+        method: method,
+        body: formData,
       })
-      .catch((error) => {
-        console.error("Error:", error);
-        alert("Ocurrió un error de red. Intente nuevamente.");
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.respuesta === "ok") {
+            alert("Alojamiento guardado exitosamente.");
+            window.location.href = "alojamientos.html";
+          } else {
+            alert("Error: " + (data.mensaje || "Mensaje no disponible"));
+          }
+        })
+        .catch((error) => {
+          console.error("Error en POST:", error);
+          alert("Error de red o del servidor. Detalles: " + error.message);
+        });
+    }
   });
 
-  // Función para cargar los datos de un alojamiento para editar
   function cargarDatosAlojamiento(id) {
-    fetch(`../controllers/alojamiento.controller.php?id=${id}`) // Usamos GET con parámetro
+    fetch(`../controllers/alojamiento.controller.php?id=${id}`)
       .then((response) => response.json())
       .then((data) => {
         if (data.respuesta === "ok" && data.datos) {
           const alojamiento = data.datos;
-          // Rellenar los campos del formulario
           document.getElementById("id_alojamiento").value = alojamiento.id;
           document.getElementById("nombre_alojamiento").value =
             alojamiento.nombre;
@@ -68,15 +124,17 @@ document.addEventListener("DOMContentLoaded", function () {
             alojamiento.capacidad;
           document.getElementById("imagen_alojamiento").value =
             alojamiento.imagen;
-          // El estado no se edita directamente en este formulario
         } else {
-          alert("No se pudo cargar los datos del alojamiento.");
-          window.location.href = "alojamientos.html"; // Volver a la lista
+          alert(
+            "Error al cargar datos: " +
+              (data.mensaje || "Mensaje no disponible")
+          );
+          window.location.href = "alojamientos.html";
         }
       })
       .catch((error) => {
         console.error("Error al cargar alojamiento:", error);
-        alert("Ocurrió un error al cargar los datos. Intente nuevamente.");
+        alert("Error de red al cargar datos. Detalles: " + error.message);
         window.location.href = "alojamientos.html";
       });
   }
